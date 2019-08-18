@@ -7,8 +7,8 @@ defmodule Telnyx.Client do
   def post(api_key, params, url) do
     with {:ok, data} <- Jason.encode(params),
          {:ok, response} <- Mojito.post(url, headers(api_key), data, opts()),
-         {:ok, data} <- check_response(response) do
-      {:ok, data}
+         {:ok, body} <- check_response(response) do
+      {:ok, body["data"]}
     else
       error -> error
     end
