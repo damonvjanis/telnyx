@@ -1,11 +1,12 @@
 # Telnyx
 
-**TODO: Add description**
+Elixir client for the Telnyx API.
+
+Currently supports only `Telnyx.Message.create/2`, but will eventually support all calls at https://developers.telnyx.com/docs/api/v2/overview.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `telnyx` to your list of dependencies in `mix.exs`:
+Add `telnyx` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +16,18 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/telnyx](https://hexdocs.pm/telnyx).
+## Usage
+
+```elixir
+api_key = "YOUR_API_KEY"
+
+{:ok, data} = Telnyx.Message.create(api_key, %{
+  messaging_profile_id: "3fa85f55-5717-4562-b3fc-2c963f63vga6",
+  from: "+18665552368", # Your Telnyx number
+  to: "+18445552367",
+  text: "Hello, World!"
+})
+```
+
+Documentation at: [https://hexdocs.pm/telnyx](https://hexdocs.pm/telnyx).
 
