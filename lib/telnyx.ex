@@ -1,6 +1,6 @@
 defmodule Telnyx do
   @moduledoc """
-  Telnyx is a real-time communications platform with full, feature-rich functionality, making it quick and easy to set up and port numbers around the world, configure messaging, control VoIP and IP network functions, and define how and where communications can be used in real time. The Telnyx API can power a host of specialty applications, from call tracking to cloud-based PBX, dynamic security, and authentication use cases. [link](https://developers.telnyx.com/docs/api/v2/overview)
+  [Telnyx](https://telnyx.com) is a real-time communications platform with full, feature-rich functionality, making it quick and easy to set up and port numbers around the world, configure messaging, control VoIP and IP network functions, and define how and where communications can be used in real time. The Telnyx API can power a host of specialty applications, from call tracking to cloud-based PBX, dynamic security, and authentication use cases. [link](https://developers.telnyx.com/docs/api/v2/overview)
 
   This library aims to make it easy to integrate with the Telnyx API in Elixir.
 
