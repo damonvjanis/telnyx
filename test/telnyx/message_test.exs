@@ -22,7 +22,7 @@ defmodule Telnyx.MessageTest do
     test "succeeds with valid params" do
       {:ok, successful_result} = Telnyx.Message.create(@test_key, @valid_params)
 
-      assert successful_result["data"] != nil
+      assert successful_result["text"] == "Hello world"
     end
   end
 end
