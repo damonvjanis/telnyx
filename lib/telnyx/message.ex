@@ -5,7 +5,7 @@ defmodule Telnyx.Message do
 
   alias Telnyx.Client
 
-  @base_url Application.get_env(:telnyx, :base_url)
+  @base_url Telnyx.base_url()
 
   @doc """
   Sends a message.

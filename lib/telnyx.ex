@@ -47,4 +47,13 @@ defmodule Telnyx do
   ## License
   This software is released under the MIT License.
   """
+
+  # Helper for getting base url
+  def base_url do
+    if Mix.env() == :test do
+      "https://localhost:12112/"
+    else
+      "https://api.telnyx.com/"
+    end
+  end
 end
