@@ -30,6 +30,6 @@ defmodule Telnyx.Client do
   end
 
   defp check_response(response) do
-    {:error, %Telnyx.Error{status_code: response.status_code, message: inspect(response[:body])}}
+    {:error, %Telnyx.Error{status_code: response.status_code, message: response.body}}
   end
 end

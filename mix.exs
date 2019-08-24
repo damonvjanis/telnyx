@@ -4,7 +4,7 @@ defmodule Telnyx.MixProject do
   def project do
     [
       app: :telnyx,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.7",
       description: "Telnyx API Elixir Client",
       source_url: "https://github.com/damonvjanis/telnyx",
