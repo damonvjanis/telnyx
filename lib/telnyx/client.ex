@@ -4,6 +4,7 @@ defmodule Telnyx.Client do
   @content_type {"Content-Type", "application/json"}
   @accept {"Accept", "application/json"}
 
+  @spec post(String.t(), map, String.t()) :: {:ok, map} | {:error, any}
   def post(api_key, params, url) do
     with {:ok, data} <- Jason.encode(params),
          {:ok, response} <- Mojito.post(url, headers(api_key), data, opts()),
