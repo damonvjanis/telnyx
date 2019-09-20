@@ -10,8 +10,14 @@ defmodule Telnyx.Client do
          {:ok, response} <- Mojito.post(url, headers(api_key), data, opts()),
          {:ok, body} <- check_response(response) do
       {:ok, body["data"]}
-    else
-      error -> error
+    end
+  end
+
+  @spec get(String.t(), String.t()) :: {:ok, map} | {:error, any}
+  def get(api_key, url) do
+    with {:ok, response} <- Mojito.get(url, headers(api_key), opts()),
+         {:ok, body} <- check_response(response) do
+      {:ok, body["data"]}
     end
   end
 
