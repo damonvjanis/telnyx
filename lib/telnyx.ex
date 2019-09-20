@@ -9,7 +9,7 @@ defmodule Telnyx do
     ```
     api_key = "YOUR_API_KEY"
 
-    {:ok, data} = Telnyx.Message.create(api_key, %{
+    {:ok, data} = Telnyx.Messages.create(api_key, %{
       messaging_profile_id: "3fa85f55-5717-4562-b3fc-2c963f63vga6",
       from: "+18665552368", # Your Telnyx number
       to: "+18445552367",
@@ -25,9 +25,11 @@ defmodule Telnyx do
 
   ## Usage
 
-  Currently the only available call is `Telnyx.Message.create/2`, which sends an outbound SMS.
+  Currently the only available call is `Telnyx.Messages.create/2`, which sends an outbound SMS.
 
   Eventually all of the API calls at https://developers.telnyx.com/docs/api/v2/overview will be supported.
+
+  There is currently no plan to support v1 endpoints, although if there's interest please let me know!
 
   ## Changelog
 
