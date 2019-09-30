@@ -22,7 +22,7 @@ defmodule Telnyx.MessagesTest do
     end
 
     test "succeeds with valid params" do
-      {:ok, successful_result} = Telnyx.Messages.create(@test_key, @valid_params) |> IO.inspect()
+      {:ok, successful_result} = Telnyx.Messages.create(@test_key, @valid_params)
 
       assert successful_result["text"] == "Hello world"
     end
@@ -35,7 +35,7 @@ defmodule Telnyx.MessagesTest do
     end
 
     test "succeeds with valid uid" do
-      assert match?({:ok, _}, Telnyx.Messages.retrieve(@test_key, @uuid) |> IO.inspect())
+      assert match?({:ok, _}, Telnyx.Messages.retrieve(@test_key, @uuid))
     end
   end
 end
