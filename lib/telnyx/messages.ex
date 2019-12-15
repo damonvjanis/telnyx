@@ -1,6 +1,6 @@
 defmodule Telnyx.Messages do
   @moduledoc """
-  Context for messages endpoints
+  Send a message with `create/2`, and retrieve a message with `retrieve/2`.
   """
 
   alias Telnyx.Client
@@ -12,15 +12,15 @@ defmodule Telnyx.Messages do
 
   ## Examples
 
-    ```elixir
+    ```
     api_key = "YOUR_API_KEY"
 
-    Telnyx.Messages.create(api_key, %{
-      messaging_profile_id: "3fa85f55-5717-4562-b3fc-2c963f63vga6",
+    %{
       from: "+18665552368", # Your Telnyx number
       to: "+18445552367",
       text: "Hello, World!"
-    })
+    }
+    |> Telnyx.Messages.create(api_key)
     ```
     Example response:
     ```
@@ -54,34 +54,44 @@ defmodule Telnyx.Messages do
     }
     ```
 
-  See https://developers.telnyx.com/docs/api/v2/messaging/Messages for more options
+  See https://developers.telnyx.com/docs/api/v2/messaging/Messages
   """
-  @spec create(String.t(), map) :: {:ok, map} | {:error, Telnyx.error()}
-  def create(api_key, params = %{messaging_profile_id: _, from: _, to: _, text: _}) do
+  @spec create(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  def create(params = %{}, api_key) do
     Client.post(api_key, params, @base_url <> "v2/messages")
   end
 
-  def create(_api_key, params) do
-    required_params = [:messaging_profile_id, :from, :to, :text]
-    missing_key = Enum.find(required_params, fn key -> params[key] == nil end)
+  @doc """
+  Same as `create/2` but specifically for sending long-code messages.
 
-    {:error, %Telnyx.Error{message: ~s(required param "#{missing_key}" not given)}}
+  See the documentation for `create/2` for example.
+
+  `create/2` supports long-code already, if the `from` param is a long code number.
+
+  See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createLongCodeMessage
+  """
+  @spec create_long_code(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  def create_long_code(params = %{}, api_key) do
+    Client.post(api_key, params, @base_url <> "v2/messages/long_code")
   end
 
   @doc """
-  Sends a message.
+  Same as `create/2` but specifically for sending messages from a number pool.
+  The option pool must be turned on in the messaging profile.
+
+  `create/2` supports sending from a number pool already with the same params (ensuring that `messaging_profile_id` is included, but omitting the `from`).
 
   ## Examples
 
-    ```elixir
+    ```
     api_key = "YOUR_API_KEY"
 
-    Telnyx.Messages.create_alphanumeric(api_key, %{
-      messaging_profile_id: "3fa85f55-5717-4562-b3fc-2c963f63vga6",
-      from: "TelnyxID", # Your Telnyx alphanumeric ID
+    %{
+      messaging_profile_id: "uuid",
       to: "+18445552367",
       text: "Hello, World!"
-    })
+    }
+    |> Telnyx.Messages.create(api_key)
     ```
     Example response:
     ```
@@ -92,7 +102,7 @@ defmodule Telnyx.Messages do
         "created_at" => "2019-01-23T18:10:02.574Z",
         "direction" => "outbound",
         "errors" => [],
-        "from" => "TelnyxID",
+        "from" => "+18665552368",
         "id" => "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "line_type" => "Wireless",
         "parts" => 1,
@@ -115,18 +125,25 @@ defmodule Telnyx.Messages do
     }
     ```
 
-  See https://developers.telnyx.com/docs/api/v2/messaging/Messages for more options
+  See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createNumberPoolMessage
   """
-  @spec create_alphanumeric(String.t(), map) :: {:ok, map} | {:error, Telnyx.error()}
-  def create_alphanumeric(api_key, params = %{messaging_profile_id: _, from: _, to: _, text: _}) do
-    Client.post(api_key, params, @base_url <> "v2/messages/alphanumeric_sender_id")
+  @spec create_from_number_pool(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  def create_from_number_pool(params = %{}, api_key) do
+    Client.post(api_key, params, @base_url <> "v2/messages/number_pool")
   end
 
-  def create_alphanumeric(_api_key, params) do
-    required_params = [:messaging_profile_id, :from, :to, :text]
-    missing_key = Enum.find(required_params, fn key -> params[key] == nil end)
+  @doc """
+  Same as `create/2` but specifically for sending short-code messages.
 
-    {:error, %Telnyx.Error{message: ~s(required param "#{missing_key}" not given)}}
+  `create/2` supports short-code already with the same params.
+
+  See the `create/2` documentation for example.
+
+  See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createShortCodeMessage
+  """
+  @spec create_short_code(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  def create_short_code(params = %{}, api_key) do
+    Client.post(api_key, params, @base_url <> "v2/messages/short_code")
   end
 
   @doc """
@@ -134,7 +151,7 @@ defmodule Telnyx.Messages do
 
   ## Examples
 
-    ```elixir
+    ```
     api_key = "YOUR_API_KEY"
 
     Telnyx.Messages.retrieve(api_key, "uuid")
@@ -175,11 +192,18 @@ defmodule Telnyx.Messages do
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages#retrieveMessage
   """
   @spec retrieve(String.t(), String.t()) :: {:ok, map} | {:error, Telnyx.error()}
-  def retrieve(_, uuid) when uuid in [nil, ""],
-    do: {:error, %Telnyx.Error{message: "uuid cannot be blank"}}
+  def retrieve(uuid, api_key), do: Client.get(api_key, @base_url <> "v2/messages/#{uuid}")
 
-  def retrieve(_, uuid) when not is_binary(uuid),
-    do: {:error, %Telnyx.Error{message: "invalid format for uuid"}}
+  @doc """
+  This call disappeared out of the v2 docs, so it has been deprecated.
 
-  def retrieve(api_key, uuid), do: Client.get(api_key, @base_url <> "v2/messages/#{uuid}")
+  You can use an alphanumeric key instead of a phone number in `create/2`.
+
+  See `create/2` documentation for example.
+  """
+  @deprecated "Use create/2 instead"
+  @spec create_alphanumeric(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  def create_alphanumeric(params = %{}, api_key) do
+    Client.post(api_key, params, @base_url <> "v2/messages/alphanumeric_sender_id")
+  end
 end
