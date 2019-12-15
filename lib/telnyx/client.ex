@@ -49,7 +49,7 @@ defmodule Telnyx.Client do
     end
   end
 
-  defp check_response(%Mojito.Response{status_code: 200, body: body}) do
+  defp check_response(%Mojito.Response{status_code: status, body: body}) when status < 300 do
     Jason.decode(body)
   end
 
