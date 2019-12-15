@@ -4,7 +4,7 @@ defmodule Telnyx.MixProject do
   def project do
     [
       app: :telnyx,
-      version: "0.1.2",
+      version: "0.2.0",
       elixir: "~> 1.7",
       description: "Telnyx API Elixir Client",
       source_url: "https://github.com/damonvjanis/telnyx",
@@ -30,9 +30,9 @@ defmodule Telnyx.MixProject do
 
   defp deps do
     [
-      {:mojito, "~> 0.4.0"},
+      {:mojito, "~> 0.6.0"},
       {:jason, "~> 1.1"},
-      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 end
