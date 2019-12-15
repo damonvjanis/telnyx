@@ -11,11 +11,12 @@ defmodule Telnyx.ClientTest do
   }
 
   @valid_url Telnyx.base_url() <> "v2/messages"
+  @update_url Telnyx.base_url() <> "v2/messaging_profiles/uuid"
   @bad_url Telnyx.base_url() <> "v2/not-an-endpoint"
 
   alias Telnyx.Client
 
-  describe "post/2" do
+  describe "post/3" do
     test "gives error message with bad url" do
       {:error, failed_result} = Client.post(@test_key, @valid_params, @bad_url)
 
@@ -28,6 +29,21 @@ defmodule Telnyx.ClientTest do
 
       assert is_map(result)
       assert result["type"] == "sms"
+    end
+  end
+
+  describe "patch/3" do
+    test "gives error message with bad url" do
+      {:error, failed_result} = Client.patch(@test_key, @valid_params, @bad_url)
+
+      assert failed_result.__struct__ == Telnyx.Error
+      assert failed_result.status_code == 404
+    end
+
+    test "returns decoded body on success" do
+      {:ok, result} = Client.patch(@test_key, %{}, @update_url)
+
+      assert is_map(result)
     end
   end
 end
