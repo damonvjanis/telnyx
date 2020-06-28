@@ -28,7 +28,7 @@ defmodule Telnyx.ClientTest do
       {:ok, result} = Client.post(@test_key, @valid_params, @valid_url)
 
       assert is_map(result)
-      assert result["type"] == "sms"
+      assert result["type"] == "MMS"
     end
   end
 

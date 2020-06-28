@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.0 (TBD)
+## 0.2.1 (2020-06-28)
+
+Bumps the version of Mojito to 7.x to take advantage of [this bug-fix](https://github.com/appcues/mojito/pull/59). Previously, some requests to Telnyx were intermittently timing-out, resulting in poor user experiences.
+
+## 0.2.0 (2019-12-15)
 
 *Breaking Changes:*
 All API calls to `Telnyx.Message` should now go to `Telnyx.Messages`, and the order of arguments has switched. The `api_key` arg now comes after the main argument for better piping. For example:
