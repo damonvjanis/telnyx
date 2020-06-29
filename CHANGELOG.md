@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 (2020-06-29)
+
+*(sort of) Breaking Change:* You can now swap out Mojito, the default API client, with any you'd like. Documentation is in the Telnyx.Client module. Significantly, since Mojito is now an optional dependency, you have to add it to your deps like `{:mojito, "~> 0.7.0"}` so the project will compile.
+
+Also adds endpoints for messaging phone numbers.
+
 ## 0.2.1 (2020-06-28)
 
 Bumps the version of Mojito to 7.x to take advantage of [this bug-fix](https://github.com/appcues/mojito/pull/59). Previously, some requests to Telnyx were intermittently timing-out, resulting in poor user experiences.

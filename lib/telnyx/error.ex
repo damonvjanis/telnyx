@@ -1,5 +1,3 @@
 defmodule Telnyx.Error do
-  defexception [:status_code, :error_code, :message, :meta, :title]
-
-  @type t :: Telnyx.error()
+  defexception [:status_code, :error_code, :source, :message, :meta, :title]
 end

@@ -59,11 +59,10 @@ defmodule Telnyx.MessagingProfilesTest do
       refute match?({:ok, _}, Telnyx.MessagingProfiles.update(params, "", @test_key))
     end
 
-    # Not implemented in test server yet
-    # test "succeeds with valid uid and params" do
-    #   params = %{name: "Summer Campaign"}
-    #   assert match?({:ok, _}, Telnyx.MessagingProfiles.update(params, @uuid, @test_key))
-    # end
+    test "succeeds with valid uid and params" do
+      params = %{name: "Summer Campaign"}
+      assert match?({:ok, _}, Telnyx.MessagingProfiles.update(params, @uuid, @test_key))
+    end
   end
 
   describe "list_messaging_profile_phone_numbers/2" do

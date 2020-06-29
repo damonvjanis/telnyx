@@ -10,9 +10,9 @@ defmodule Telnyx.ClientTest do
     text: "Hello world"
   }
 
-  @valid_url Telnyx.base_url() <> "v2/messages"
-  @update_url Telnyx.base_url() <> "v2/messaging_profiles/uuid"
-  @bad_url Telnyx.base_url() <> "v2/not-an-endpoint"
+  @valid_url "/messages"
+  @update_url "/messaging_profiles/uuid"
+  @bad_url "/not-an-endpoint"
 
   alias Telnyx.Client
 

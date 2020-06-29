@@ -5,8 +5,6 @@ defmodule Telnyx.MessagingProfiles do
 
   alias Telnyx.Client
 
-  @base_url Telnyx.base_url()
-
   @doc """
   Lists all messaging profiles.
 
@@ -36,8 +34,7 @@ defmodule Telnyx.MessagingProfiles do
   }
   ```
   """
-  @spec list(String.t()) :: {:ok, [map]} | {:error, Telnyx.error()}
-  @spec list(String.t(), Keyword.t()) :: {:ok, [map]} | {:error, Telnyx.error()}
+  @spec list(String.t(), Keyword.t()) :: {:ok, [map]} | {:error, %Telnyx.Error{}}
   def list(api_key, opts \\ []) do
     query =
       if opts != [] do
@@ -50,7 +47,7 @@ defmodule Telnyx.MessagingProfiles do
         |> Enum.join("&")
       end
 
-    Client.get(api_key, @base_url <> "v2/messaging_profiles?#{query}")
+    Client.get(api_key, "/messaging_profiles?#{query}")
   end
 
   @doc """
@@ -85,9 +82,9 @@ defmodule Telnyx.MessagingProfiles do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles?#createMessagingProfile
   """
-  @spec create(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messaging_profiles")
+    Client.post(api_key, params, "/messaging_profiles")
   end
 
   @doc """
@@ -124,9 +121,9 @@ defmodule Telnyx.MessagingProfiles do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles#deleteMessagingProfile
   """
-  @spec delete(String.t(), String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec delete(String.t(), String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def delete(uuid, api_key) do
-    Client.delete(api_key, @base_url <> "v2/messaging_profiles/#{uuid}")
+    Client.delete(api_key, "/messaging_profiles/#{uuid}")
   end
 
   @doc """
@@ -161,9 +158,9 @@ defmodule Telnyx.MessagingProfiles do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles#retrieveMessagingProfile
   """
-  @spec retrieve(String.t(), String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec retrieve(String.t(), String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def retrieve(uuid, api_key) do
-    Client.get(api_key, @base_url <> "v2/messaging_profiles/#{uuid}")
+    Client.get(api_key, "/messaging_profiles/#{uuid}")
   end
 
   @doc """
@@ -199,9 +196,9 @@ defmodule Telnyx.MessagingProfiles do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles#updateMessagingProfile
   """
-  @spec update(map, String.t(), String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec update(map, String.t(), String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def update(params = %{}, uuid, api_key) do
-    Client.patch(api_key, params, @base_url <> "v2/messaging_profiles/#{uuid}")
+    Client.patch(api_key, params, "/messaging_profiles/#{uuid}")
   end
 
   @doc """
@@ -235,7 +232,7 @@ defmodule Telnyx.MessagingProfiles do
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles#listMessagingProfilePhoneNumbers
   """
   @spec list_messaging_profile_phone_numbers(String.t(), String.t(), Keyword.t()) ::
-          {:ok, [map]} | {:error, Telnyx.error()}
+          {:ok, [map]} | {:error, %Telnyx.Error{}}
   def list_messaging_profile_phone_numbers(uuid, api_key, opts \\ []) do
     query =
       if opts != [] do
@@ -248,7 +245,7 @@ defmodule Telnyx.MessagingProfiles do
         |> Enum.join("&")
       end
 
-    Client.get(api_key, @base_url <> "v2/messaging_profiles/#{uuid}/phone_numbers?#{query}")
+    Client.get(api_key, "/messaging_profiles/#{uuid}/phone_numbers?#{query}")
   end
 
   @doc """
@@ -283,7 +280,7 @@ defmodule Telnyx.MessagingProfiles do
   See https://developers.telnyx.com/docs/api/v2/messaging/Messaging-Profiles#listMessagingProfileShortCodes
   """
   @spec list_messaging_profile_short_codes(String.t(), String.t(), Keyword.t()) ::
-          {:ok, [map]} | {:error, Telnyx.error()}
+          {:ok, [map]} | {:error, %Telnyx.Error{}}
   def list_messaging_profile_short_codes(uuid, api_key, opts \\ []) do
     query =
       if opts != [] do
@@ -296,7 +293,7 @@ defmodule Telnyx.MessagingProfiles do
         |> Enum.join("&")
       end
 
-    Client.get(api_key, @base_url <> "v2/messaging_profiles/#{uuid}/short_codes?#{query}")
+    Client.get(api_key, "/messaging_profiles/#{uuid}/short_codes?#{query}")
   end
 
   defp build_query_string(type, key, value), do: "#{type}[#{key}]=#{value}"

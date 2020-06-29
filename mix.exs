@@ -10,13 +10,21 @@ defmodule Telnyx.MixProject do
       source_url: "https://github.com/damonvjanis/telnyx",
       package: package(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      # Suppress warnings
+      xref: [
+        exclude: [
+          Mojito
+        ]
+      ]
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Telnyx.Application, []},
+      env: [client: Telnyx.Client.Mojito, base_url: "https://api.telnyx.com/v2"]
     ]
   end
 
@@ -30,7 +38,7 @@ defmodule Telnyx.MixProject do
 
   defp deps do
     [
-      {:mojito, "~> 0.7.0"},
+      {:mojito, "~> 0.7.0", optional: true},
       {:jason, "~> 1.1"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]

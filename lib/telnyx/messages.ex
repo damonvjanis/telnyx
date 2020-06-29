@@ -5,8 +5,6 @@ defmodule Telnyx.Messages do
 
   alias Telnyx.Client
 
-  @base_url Telnyx.base_url()
-
   @doc """
   Sends a message.
 
@@ -56,9 +54,9 @@ defmodule Telnyx.Messages do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages
   """
-  @spec create(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messages")
+    Client.post(api_key, params, "/messages")
   end
 
   @doc """
@@ -70,9 +68,9 @@ defmodule Telnyx.Messages do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createLongCodeMessage
   """
-  @spec create_long_code(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create_long_code(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create_long_code(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messages/long_code")
+    Client.post(api_key, params, "/messages/long_code")
   end
 
   @doc """
@@ -127,9 +125,9 @@ defmodule Telnyx.Messages do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createNumberPoolMessage
   """
-  @spec create_from_number_pool(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create_from_number_pool(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create_from_number_pool(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messages/number_pool")
+    Client.post(api_key, params, "/messages/number_pool")
   end
 
   @doc """
@@ -141,9 +139,9 @@ defmodule Telnyx.Messages do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages#createShortCodeMessage
   """
-  @spec create_short_code(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create_short_code(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create_short_code(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messages/short_code")
+    Client.post(api_key, params, "/messages/short_code")
   end
 
   @doc """
@@ -191,8 +189,8 @@ defmodule Telnyx.Messages do
 
   See https://developers.telnyx.com/docs/api/v2/messaging/Messages#retrieveMessage
   """
-  @spec retrieve(String.t(), String.t()) :: {:ok, map} | {:error, Telnyx.error()}
-  def retrieve(uuid, api_key), do: Client.get(api_key, @base_url <> "v2/messages/#{uuid}")
+  @spec retrieve(String.t(), String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
+  def retrieve(uuid, api_key), do: Client.get(api_key, "/messages/#{uuid}")
 
   @doc """
   This call disappeared out of the v2 docs, so it has been deprecated.
@@ -202,8 +200,8 @@ defmodule Telnyx.Messages do
   See `create/2` documentation for example.
   """
   @deprecated "Use create/2 instead"
-  @spec create_alphanumeric(map, String.t()) :: {:ok, map} | {:error, Telnyx.error()}
+  @spec create_alphanumeric(map, String.t()) :: {:ok, map} | {:error, %Telnyx.Error{}}
   def create_alphanumeric(params = %{}, api_key) do
-    Client.post(api_key, params, @base_url <> "v2/messages/alphanumeric_sender_id")
+    Client.post(api_key, params, "/messages/alphanumeric_sender_id")
   end
 end

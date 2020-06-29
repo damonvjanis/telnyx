@@ -26,4 +26,4 @@ erl_crash.dump
 telnyx-*.tar
 
 # Ignore mock server files
-/test/telnyx-mock/
+/test/telnyx-mock
